@@ -3,16 +3,16 @@ import {baseUrl} from '../shared/baseUrl';
 
 export const addTask = (task) => ({
 type: ActionTypes.ADD_TASK,
-payload:  task
+payload: task
 
 });
 
-export const postTask =(dishId, rating, author, comment) => (dispatch) => {
+export const postTask =(priority, author, taskdescription) => (dispatch) => {
     const newTask=  {
-        dishId: dishId,
-        rating: rating,
+        
+        priority: priority,
         author: author,
-        comment: comment
+        taskdescription: taskdescription
     
     
     };
@@ -45,7 +45,6 @@ return fetch(baseUrl + 'tasks', {
     .catch(error =>  { console.log('post Tasks', error.message); alert('Your Task could not be posted\nError: '+error.message); });
 
 };
-
 
 
 

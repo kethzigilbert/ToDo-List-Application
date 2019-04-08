@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Menu from './MenuComponent';
+import Task from './TaskComponent';
 import Header from './HeaderComponent';
 import {Switch, Redirect,Route ,withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {fetchTasks } from '../redux/ActionCreators';
+import {fetchTasks, postTask } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return{
@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   
- 
+  postTask: ( priority, author, task) => dispatch(postTask( priority, author, task)),
     fetchTasks: () => dispatch(fetchTasks()),
   
 });
@@ -25,6 +25,7 @@ class Main extends Component {
   
   
   componentDidMount(){
+    
     this.props.fetchTasks();
     
   }
@@ -35,13 +36,13 @@ class Main extends Component {
    
    
     return (
-      <div>
+      <div className="taskbody_background">
         <Header/>
         <Switch>
               
-              <Route exact path='/menu' component={() => <Menu tasks={this.props.tasks} />} />
+              <Route exact path='/task' component={() => <Task tasks={this.props.tasks} postTask={this.props.postTask}/>} />
              
-              <Redirect to="/menu" />
+              <Redirect to="/task" />
           </Switch>
           
       </div>

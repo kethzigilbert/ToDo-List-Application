@@ -13,7 +13,9 @@ export const Tasks = ( state = { isLoading: true,
 
         case ActionTypes.TASKS_FAILED:
             return {...state, isLoading: false, errMess: action.payload};
-
+        case ActionTypes.ADD_TASK:
+            var task= action.payload;
+            return {...state, tasks :state.tasks.concat(task)};
         default:
             return state;
     }
