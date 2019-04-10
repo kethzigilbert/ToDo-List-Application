@@ -1,5 +1,5 @@
-import React from 'react';
-import { ListGroup,ListGroupItem, Button, Badge, Card,CardText,CardSubtitle,CardBody,CardImg,CardImgOverlay,CardTitle, Breadcrumb,BreadcrumbItem,Media } from 'reactstrap';
+import React, {Component} from 'react';
+import { ListGroup,ListGroupItem, Button, Badge,Input, Card,CardText,CardSubtitle,CardBody,CardImg,CardImgOverlay,CardTitle, Breadcrumb,BreadcrumbItem,Media } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {Loading} from './LoadingComponent';
 import AddTaskForm from './AddTaskFormComponent';
@@ -36,31 +36,93 @@ function RenderPriority(props)
         }
 
     }
-const Task = ({tasks,postTask}) => {
 
-    
-    
-    const task=tasks.tasks.map((task) => {
-            return (
-   
-   <ListGroupItem key={task.id}  >{task.taskdescription}
-   <RenderPriority priority={task.priority}/>
-   <Button outline 
-//    onClick={this.toggleCheckBox}
-   className="float-right" type="submit" color="primary">
-        <span className="fa fa-check-square fa-lg"></span>
-                                
-    </Button>
-   
-    </ListGroupItem>
- 
-  
-                
+class RenderCompleted extends Component
+    {
+        constructor(props){
+            super(props);
             
-            );
-        });
+        this.toggleCheckBox = this.toggleCheckBox.bind(this);
+      
+        }
+       
+       
+         toggleCheckBox(){
+             alert("CheckboxClicked"+this.props.taskid);
+           this.props.postupdatetask(this.props.taskid,!this.props.completed);
+        }
+       render(){
         
-        if (tasks.isLoading) {
+        if(this.props.completed)
+        {
+           
+            //const value=this.props.taskid;
+            
+            return (
+                
+                <Button outline 
+      onClick={this.toggleCheckBox}
+       className="float-right" type="submit" >
+       <span className="fa fa-check fa-lg"></span>
+            
+        Completed
+                                     
+        </Button>
+             );
+
+            
+        }
+        
+        else 
+        {
+            return(
+                <Button outline 
+       onClick={this.toggleCheckBox}
+       className="float-right" type="submit" >
+            Done
+                                     
+        </Button>
+            );
+        }
+    }
+    }
+
+class Task extends Component{
+        constructor(props){
+            super(props);
+           
+            
+        }
+
+
+       
+    
+        render () {
+            const task=this.props.tasks.tasks.map((task) => {
+                return (
+       
+       <ListGroupItem key={task.id}  >{task.taskdescription}
+       <RenderPriority priority={task.priority}/>
+       <RenderCompleted completed={task.completed} taskid={task.id} 
+        postupdatetask={this.props.postupdatetask}
+       />
+       
+        <Button outline 
+        //onClick={this.toggleCheckBox}
+       className="float-right" type="submit" >
+       <span className="fa fa-trash fa-lg"></span>
+            Delete
+                                     
+        </Button>
+       
+        </ListGroupItem>
+     
+      
+                    
+                
+                );
+            });
+        if (this.props.tasks.isLoading) {
             return(
                 <div className="container">
                     <div className="row">            
@@ -69,12 +131,12 @@ const Task = ({tasks,postTask}) => {
                 </div>
             );
         }
-        else if (tasks.errMess) {
+        else if (this.props.tasks.errMess) {
             return(
                 <div className="container">
                     <div className="row"> 
                         <div className="col-12">
-                            <h4>{tasks.errMess}</h4>
+                            <h4>{this.props.tasks.errMess}</h4>
                         </div>
                     </div>
                 </div>
@@ -88,7 +150,7 @@ const Task = ({tasks,postTask}) => {
            
             <div className="col-12">
                         <h3>Tasks
-                        <AddTaskForm postTask={postTask} />
+                        <AddTaskForm postTask={this.props.postTask} />
                         </h3>
                         
                         <hr />
@@ -106,7 +168,7 @@ const Task = ({tasks,postTask}) => {
 
         );
     
-
+    }
 }
 
         

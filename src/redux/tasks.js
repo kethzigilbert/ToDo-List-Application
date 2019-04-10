@@ -16,6 +16,13 @@ export const Tasks = ( state = { isLoading: true,
         case ActionTypes.ADD_TASK:
             var task= action.payload;
             return {...state, tasks :state.tasks.concat(task)};
+        case ActionTypes.UPDATE_CHECKED_TASK:
+            var task = action.payload;
+            var item= state.tasks.find(item=>item.id== task.id);
+            item.completed = (task.completed) ;
+            return {...state, tasks :state.tasks};
+               
+
         default:
             return state;
     }
