@@ -2,12 +2,8 @@ import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
 import { combineForms } from 'react-redux-form';
 
-export const addTask = (task) => ({
-type: ActionTypes.ADD_TASK,
-payload: task
 
-});
-
+//Update Completed Status of Tasks.
 export const updatecheckedtask = (modifiedtask) => ({
     type: ActionTypes.UPDATE_CHECKED_TASK,
     payload: modifiedtask
@@ -48,43 +44,47 @@ export const postupdatetask=(taskid,data) => (dispatch) => {
     
 };
 
- //export const postupdatetask =(taskid) => (dispatch) => {
-//      const newcheckedTaskid=  {
-//         id:taskid
-       
-// };
+//Deleting a task 
 
+ export const deletetaskaction = (taskid) => ({
+     type: ActionTypes.DELETE_TASK,
+     payload: taskid
+ });
 
+export const deletetask=(taskid)  =>(dispatch)=> {
+    dispatch(deletetaskaction(taskid));
 
-// return fetch(baseUrl + 'tasks', {
-//     method: "POST",
-//     body: JSON.stringify(newcheckedTaskid),
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     credentials: "same-origin"
-// })
-// .then(response => {
-//     if (response.ok) {
-//       return response;
-//     } else {
-//       var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//       error.response = response;
-//       throw error;
-//     }
-//   },
-  
-//   error => {
-//         throw error;
-//   })
+    return fetch(baseUrl + 'tasks/' + taskid , {
+        method: 'DELETE',
+        
+    })
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      
+      error => {
+            throw error;
+      })
+    
+      .then(response => response.json())
+       //.then(taskid => dispatch(deletetaskaction(taskid)))
+      .catch(error =>  { console.log('Update task', error.message); alert('Your Task could not be Deleted \nError: '+error.message); });
+    
+};
 
-//   .then(response => response.json())
-//     .then(response => dispatch(updatecheckedtask(response)))
-//     .catch(error =>  { console.log('post Tasks', error.message); alert('Your Task could not be posted\nError: '+error.message); });
+//Adding a task
 
-// };
-
-
+export const addTask = (task) => ({
+    type: ActionTypes.ADD_TASK,
+    payload: task
+    
+    });
 export const postTask =(priority, author, taskdescription) => (dispatch) => {
     const newTask=  {
         

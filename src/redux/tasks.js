@@ -1,4 +1,5 @@
 import * as ActionTypes from './ActionTypes';
+import { stat } from 'fs';
 
 export const Tasks = ( state = { isLoading: true,
     errMess: null,
@@ -21,7 +22,13 @@ export const Tasks = ( state = { isLoading: true,
             var item= state.tasks.find(item=>item.id== task.id);
             item.completed = (task.completed) ;
             return {...state, tasks :state.tasks};
-               
+        case ActionTypes.DELETE_TASK:
+            var taskid = action.payload;
+           
+            var newstates = state.tasks.filter(function (task) {
+                return task.id != taskid 
+              });
+            return {...state, tasks :newstates};
 
         default:
             return state;
