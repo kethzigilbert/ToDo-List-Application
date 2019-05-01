@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { ListGroup,ListGroupItem, Button, Badge,Input, Card,CardText,CardSubtitle,CardBody,CardImg,CardImgOverlay,CardTitle, Breadcrumb,BreadcrumbItem,Media } from 'reactstrap';
+import { Control,  Errors} from 'react-redux-form';
+import { ListGroup,ListGroupItem, Button,Label,Col,Form, FormGroup, ButtonGroup, Badge,Input, Card,CardText,CardSubtitle,CardBody,CardImg,CardImgOverlay,CardTitle, Breadcrumb,BreadcrumbItem,Media } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import {Loading} from './LoadingComponent';
 import AddTaskForm from './AddTaskFormComponent';
 //import { baseUrl } from '../shared/baseUrl';
@@ -8,8 +10,7 @@ import AddTaskForm from './AddTaskFormComponent';
 function RenderPriority(props)
     {
 
-
-        
+       
         if(props.priority=="Low")
         {
             
@@ -37,6 +38,8 @@ function RenderPriority(props)
 
     }
 
+
+   
 class RenderCompleted extends Component
     {
         constructor(props){
@@ -48,7 +51,7 @@ class RenderCompleted extends Component
        
        
          toggleCheckBox(){
-             alert("CheckboxClicked"+this.props.taskid);
+            //alert("CheckboxClicked"+this.props.taskid);
            this.props.postupdatetask(this.props.taskid,!this.props.completed);
         }
        render(){
@@ -63,7 +66,7 @@ class RenderCompleted extends Component
                 <Button outline 
       onClick={this.toggleCheckBox}
        className="float-right" type="submit" >
-       <span className="fa fa-check fa-lg"></span>
+       <span className="fa fa-check fa-sm"></span>
             
         Completed
                                      
@@ -79,7 +82,8 @@ class RenderCompleted extends Component
                 <Button outline 
        onClick={this.toggleCheckBox}
        className="float-right" type="submit" >
-            Done
+       <span className="fa fa-list fa-sm"></span>
+            To Be Done
                                      
         </Button>
             );
@@ -99,7 +103,7 @@ class RenderDelete extends Component
         }
              
         deletetask(){
-            alert("Deletetask"+this.props.taskid);
+            //alert("Deletetask"+this.props.taskid);
            this.props.deletetask(this.props.taskid);
         }
 
@@ -112,7 +116,7 @@ class RenderDelete extends Component
         <Button outline 
         onClick= {this.deletetask}
        className="float-right" type="submit" >
-       <span className="fa fa-trash fa-lg"></span>
+       <span className="fa fa-trash fa-sm"></span>
         Delete
                                   
         </Button>
@@ -125,24 +129,51 @@ class RenderDelete extends Component
 class Task extends Component{
         constructor(props){
             super(props);
-            
+            this.handleSubmit = this.handleSubmit.bind(this);
             
         }
 
-    
+        handleSubmit = (e) => {
+            e.preventDefault();
+        
+            //  extract the node list from the form
+            //  it looks like an array, but lacks array methods
+            const { priority } = this.form;
+        
+            // convert node list to an array
+            const checkboxArray = Array.prototype.slice.call(priority);
+        
+            // extract only the checked checkboxes
+            const checkedCheckboxes = checkboxArray.filter(input => input.checked);
+            console.log('checked array:', checkedCheckboxes);
+        
+            // use .map() to extract the value from each checked checkbox
+            const checkedCheckboxesValues = checkedCheckboxes.map(input => input.value);
+            
+            //alert('checked array:' + checkedCheckboxesValues.toString());
+            this.props.getprioritytask(checkedCheckboxesValues);
+            
+          }
+
+        
         render () {
         
         const task=this.props.tasks.tasks.map((task) => {
+
                 return (
        
        <ListGroupItem key={task.id}  >{task.taskdescription}
+
        <RenderPriority priority={task.priority}/>
        <RenderCompleted completed={task.completed} taskid={task.id} 
         postupdatetask={this.props.postupdatetask}
        />
        
         <RenderDelete taskid={task.id} deletetask={this.props.deletetask}/>
+       <p>Author: {task.author}</p>
        
+      
+        
         </ListGroupItem>
      
       
@@ -150,6 +181,8 @@ class Task extends Component{
                 
                 );
             });
+        
+        
         if (this.props.tasks.isLoading) {
             return(
                 <div className="container">
@@ -173,24 +206,60 @@ class Task extends Component{
         else
         return(
             <div className="container">
-            <div className="row">
-            
-           
-            <div className="col-12">
+                <div className="row">
+                    <div className="col-2">
+                    </div>
+                    <div className="col-10">
                         <h3>Tasks
                         <AddTaskForm postTask={this.props.postTask} />
                         </h3>
-                        
+
                         <hr />
-            </div>     
-            
-            </div>
-            <div className="row">
-           <ListGroup className="col-12">
-            {task}
-            </ListGroup>
-            </div>
-            
+                    </div>
+
+                </div>
+
+                <div className="row" >
+                    <div className="col-2">
+                        <h4> Priority </h4>
+                        <form
+                            onSubmit={this.handleSubmit}
+                            ref={form => this.form = form}>
+                            <div className="col-12">
+                            <label>
+                            <input type="checkbox" value="Low" name="priority" />
+                                Low
+                            
+                            </label>
+                            </div>
+                            <div className="col-12">
+                            <label>
+                            <input type="checkbox" value="High" name="priority" />
+                                High
+                            
+                            </label>
+                            </div>
+                            <div className="col-12">
+                            <label>
+                            <input type="checkbox" value="Medium" name="priority" />
+                                Medium
+                             
+                            </label>
+                            <input type="submit" value="Submit" />
+                            </div>
+                            
+                        </form>
+
+
+                    </div>
+                    <div className="col-10">
+                        <ListGroup >
+                            {task}
+                        </ListGroup>
+                    </div>
+
+                </div>
+
             </div>
 
 
@@ -199,7 +268,8 @@ class Task extends Component{
     }
 }
 
-        
+
+    
  
 
 
