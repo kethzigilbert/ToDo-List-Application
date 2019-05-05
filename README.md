@@ -1,17 +1,29 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-###Installing npm
+## Installing Node
+To install Node on your machine, go to https://nodejs.org and click on the Download button. Depending on your computer's platform (Windows, MacOS or Linux), the appropriate installation package is downloaded.
+Follow along the instructions to install Node on your machine. 
+Note: On Windows machines, you may need to configure your PATH environmental variable in case you forgot to turn on the add to PATH during the installation steps.
 
-Go to (https://www.npmjs.com/get-npm)  to install foobar.
-
+## Verifying the Node Installation
+Open a terminal window on your machine. If you are using a Windows machine, open a cmd window or PowerShell window with admin privileges.
+To ensure that your NodeJS setup is working correctly, type the following at the command prompt to check for the version of Node and NPM
 ```bash
-pip install foobar
+node -v
+npm -v
 ```
-###Installing json-server
+
+### Installing json-server
 json-server is a node module, and hence can be installed globally by typing the following at the command prompt:
 ```bash
 npm install json-server -g
 ```
+### Configuring the Server
+Move to the folder name 'json-server' in your terminal window, and type the following at the command prompt to start the server:
+```bash
+json-server --watch db_task.json -p 3001 
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
