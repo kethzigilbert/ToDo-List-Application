@@ -206,39 +206,3 @@ export const tasksFailed = (errmess) => ({
     
 };
 
-export const getprioritytask=(data,paramater) => (dispatch) => {
-     var urlform= '?';
-
-     for (var i=0; i<data.length; ++i)
-     {
-         urlform= urlform.concat(paramater+'='+data[i]+'&');
-     }
-    
-    return fetch(baseUrl + 'tasks' + urlform,{
-        method: "GET",
-        
-        headers: {
-          "Content-Type": "application/json"
-        }
-        
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      
-      error => {
-            throw error;
-      })
-    
-      .then(response => response.json())
-      
-        .then(response => dispatch(addTasks(response)))
-        .catch(error =>  { console.log('Update task', error.message); alert('Your priority Task could not be Updated \nError: '+error.message); });
-    
-};
