@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
   postTask: ( priority, author, task) => dispatch(postTask( priority, author, task)),
   fetchTasks: () => dispatch(fetchTasks()),
   postupdatetask: (id,data) => dispatch(postupdatetask(id,data)),
-  getprioritytask: (data) => dispatch(getprioritytask(data)),
+  getprioritytask: (data,parameter) => dispatch(getprioritytask(data,parameter)),
   deletetask: (id) => dispatch(deletetask(id))
   
   

@@ -169,12 +169,12 @@ export const tasksFailed = (errmess) => ({
  });
 
  ///Fetch based on priority
- export const getprioritytask=(data) => (dispatch) => {
+ export const getprioritytask=(data,paramater) => (dispatch) => {
      var urlform= '?';
 
      for (var i=0; i<data.length; ++i)
      {
-         urlform= urlform.concat('priority='+data[i]+'&');
+         urlform= urlform.concat(paramater+'='+data[i]+'&');
      }
     
     return fetch(baseUrl + 'tasks' + urlform,{

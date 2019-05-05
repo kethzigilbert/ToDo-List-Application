@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Control,  Errors} from 'react-redux-form';
 import { ListGroup,ListGroupItem, Button,Label,Col,Form, FormGroup, ButtonGroup, Badge,Input, Card,CardText,CardSubtitle,CardBody,CardImg,CardImgOverlay,CardTitle, Breadcrumb,BreadcrumbItem,Media } from 'reactstrap';
-import {Link} from 'react-router-dom';
-import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
+//import {Link} from 'react-router-dom';
+//import {Checkbox, CheckboxGroup} from 'react-checkbox-group';
 import {Loading} from './LoadingComponent';
 import AddTaskForm from './AddTaskFormComponent';
 //import { baseUrl } from '../shared/baseUrl';
@@ -130,7 +130,8 @@ class Task extends Component{
         constructor(props){
             super(props);
             this.handleSubmit = this.handleSubmit.bind(this);
-            
+            this.handleSubmitproject = this.handleSubmitproject.bind(this);
+            //this.getUniqueProject=this.getUniqueProject.bind(this);
         }
 
         handleSubmit = (e) => {
@@ -151,13 +152,63 @@ class Task extends Component{
             const checkedCheckboxesValues = checkedCheckboxes.map(input => input.value);
             
             //alert('checked array:' + checkedCheckboxesValues.toString());
-            this.props.getprioritytask(checkedCheckboxesValues);
+            this.props.getprioritytask(checkedCheckboxesValues,'priority');
             
           }
-
+        
+          handleSubmitproject = (e) => {
+            e.preventDefault();
+        
+            //  extract the node list from the form
+            //  it looks like an array, but lacks array methods
+            const { project } = this.form;
+        
+            // convert node list to an array
+            const checkboxArray = Array.prototype.slice.call(project);
+        
+            // extract only the checked checkboxes
+            const checkedCheckboxes = checkboxArray.filter(input => input.checked);
+            console.log('checked array:', checkedCheckboxes);
+        
+            // use .map() to extract the value from each checked checkbox
+            const checkedCheckboxesValues = checkedCheckboxes.map(input => input.value);
+            
+            //alert('checked array:' + checkedCheckboxesValues.toString());
+            this.props.getprioritytask(checkedCheckboxesValues,'project');
+            
+          }
+          
         
         render () {
+        function getUniqueProject(data){
         
+                var lookup = {};
+                var items = data;
+                var result = [];
+                
+                for (var item, i = 0; item = items[i++];) {
+                  var name = item.project;
+                
+                  if (!(name in lookup)) {
+                    lookup[name] = 1;
+                    result.push(name);
+                  }
+                }
+                return result;
+              }
+        const result= getUniqueProject(this.props.tasks.tasks);
+        
+        const projectcheckboxes= result.map((project)=>{
+            return(
+                <div className="col-12">
+                        <label>
+                        <input type="checkbox" value={project} name="project" />
+                            {project}
+                        </label>
+                </div>
+            );
+        })
+    
         const task=this.props.tasks.tasks.map((task) => {
 
                 return (
@@ -170,7 +221,8 @@ class Task extends Component{
        />
        
         <RenderDelete taskid={task.id} deletetask={this.props.deletetask}/>
-       <p>Author: {task.author}</p>
+       <p>Author: {task.author} <br/>
+       Project: {task.project}</p>
        
       
         
@@ -245,10 +297,22 @@ class Task extends Component{
                                 Medium
                              
                             </label>
-                            <input type="submit" value="Submit" />
+                            
                             </div>
+                            <input type="submit" value="Apply" />
                             
                         </form>
+                        <h4> Project </h4>
+                        <form
+                            onSubmit={this.handleSubmitproject}
+                            ref={form => this.form = form}
+                            >
+                           {projectcheckboxes}
+                            <input type="submit" value="Apply" />
+                            
+                            
+                        </form>
+
 
 
                     </div>
