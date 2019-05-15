@@ -6,3 +6,7 @@
 .checkbox-block {
     display: block
 }
+
+.dropdown_inline{
+    display:inline;
+}
