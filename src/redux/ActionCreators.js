@@ -169,14 +169,17 @@ export const tasksFailed = (errmess) => ({
  });
 
  ///Fetch based on priority
- export const getprioritytask=(data,paramater) => (dispatch) => {
+ export const getprioritytask=(data) => (dispatch) => {
      var urlform= '?';
 
-     for (var i=0; i<data.length; ++i)
-     {
-         urlform= urlform.concat(paramater+'='+data[i]+'&');
-     }
-    
+     for (let [key,value] of Object.entries(data)) {
+
+        for (var i=0; i<value.length; i++)
+        {
+        urlform= urlform.concat(key+'='+value[i]+'&');
+        }
+    }
+     
     return fetch(baseUrl + 'tasks' + urlform,{
         method: "GET",
         

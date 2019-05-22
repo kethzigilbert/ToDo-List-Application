@@ -10,3 +10,16 @@
 .dropdown_inline{
     display:inline;
 }
+
+.heading_inline{
+    display: inline;
+} 
+
+.clear_float{
+    float: right;
+    align-content:center;
+    padding: 0mm;
+    padding-bottom: 0em;
+    padding-top: 0em;
+    margin: 0em;
+}

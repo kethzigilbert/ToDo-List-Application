@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
   postTask: ( priority, author, task) => dispatch(postTask( priority, author, task)),
   fetchTasks: () => dispatch(fetchTasks()),
   postupdatetask: (id,data) => dispatch(postupdatetask(id,data)),
-  getprioritytask: (data,parameter) => dispatch(getprioritytask(data,parameter)),
+  getprioritytask: (data) => dispatch(getprioritytask(data)),
   deletetask: (id) => dispatch(deletetask(id))
   
   
@@ -47,7 +47,7 @@ class Main extends Component {
               
               <Route exact path='/task' component={() => <Task tasks={this.props.tasks} postTask={this.props.postTask}
                postupdatetask={this.props.postupdatetask} deletetask={this.props.deletetask} getprioritytask={this.props.getprioritytask}
-               />} />
+               fetchTasks={this.props.fetchTasks}/>} />
              
               <Redirect to="/task" />
           </Switch>
