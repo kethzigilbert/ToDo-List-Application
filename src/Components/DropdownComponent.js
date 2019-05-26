@@ -10,7 +10,7 @@ constructor(props){
     //this.handleSubmitnoncompleteddropdown=this.handleSubmitnoncompleteddropdown.bind(this);
     this.state={
         dropdownOpen: false,
-        dropdownValue:'Select Action'
+        
 
     };
 
@@ -29,10 +29,10 @@ render(){
                         toggle={this.toggle}
                         >
                             <DropdownToggle color="muted" caret>
-                            {this.state.dropdownValue}
+                            {this.props.dropdownValue}
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem  onClick= {() => {this.props.handlesubmitcompleted();this.setState({ dropdownValue: 'Completed' })}} >Completed</DropdownItem>
+                                <DropdownItem  onClick={this.props.handlesubmitcompleted}>Completed</DropdownItem>
                                 
                                 <DropdownItem onClick={this.props.handlesubmitnoncompleted}> All Pending Tasks</DropdownItem>
                                 

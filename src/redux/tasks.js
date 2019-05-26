@@ -29,6 +29,7 @@ export const Tasks = ( state = { isLoading: true,
                 return task.id != taskid 
               });
             return {...state, tasks :newstates};
+        
 
         default:
             return state;

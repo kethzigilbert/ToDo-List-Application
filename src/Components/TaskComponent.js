@@ -9,8 +9,27 @@ import AddTaskForm from './AddTaskFormComponent';
 import NotCompletedTasks from './NotCompletedTasks';
 import DisplayCheckbox from './DisplayCheckbox';
 import DropdownComponent from './DropdownComponent';
+import {connect} from 'react-redux';
+import {fetchTasks, postTask, postupdatetask, deletetask,getprioritytask } from '../redux/ActionCreators';
 
-   
+const mapStateToProps = state => {
+    return{
+    tasks: state.tasks,
+    
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+  
+  postTask: ( priority, author, task) => dispatch(postTask( priority, author, task)),
+  fetchTasks: () => dispatch(fetchTasks()),
+  postupdatetask: (id,data) => dispatch(postupdatetask(id,data)),
+  getprioritytask: (data) => dispatch(getprioritytask(data)),
+  deletetask: (id) => dispatch(deletetask(id))
+  
+  
+  
+});
 class Task extends Component{
         constructor(props){
             super(props);
@@ -18,9 +37,9 @@ class Task extends Component{
             this.handleSubmitcompleteddropdown=this.handleSubmitcompleteddropdown.bind(this);
             this.handleclearbutton=this.handleclearbutton.bind(this);
             this.handleSubmitnoncompleteddropdown=this.handleSubmitnoncompleteddropdown.bind(this);
-            
+            //this.alterstate=this.alterstate.bind(this);
             this.state = {
-                
+                dropdownValue:"Select Action"
                
             };
            
@@ -29,6 +48,8 @@ class Task extends Component{
        
         var combinedarray = { "completed": [true] }
         this.props.getprioritytask(combinedarray)
+        
+        this.setState({dropdownValue : 'Completed'});
         }
         
         
@@ -36,10 +57,12 @@ class Task extends Component{
         handleSubmitnoncompleteddropdown() {
     
             var combinedarray = { "completed": [false] }
+            this.setState({dropdownValue : 'Pending'});
+            
             this.props.getprioritytask(combinedarray)
-            // this.setState({dropdownValue : 'Pending'});
-            //alert("hi");
+
         }
+        
         handleclearbutton(){
               this.props.fetchTasks();
               //alert("Hi");
@@ -76,6 +99,11 @@ class Task extends Component{
           }
         
           
+          componentDidMount(){
+    
+            this.props.fetchTasks();
+            
+          }
           
         
         render () {
@@ -112,8 +140,8 @@ class Task extends Component{
                     <div className="col-2">
                         <DropdownComponent 
                         handlesubmitcompleted={this.handleSubmitcompleteddropdown}
-                            handlesubmitnoncompleted={this.handleSubmitnoncompleteddropdown}
-                            dropdownValue={this.state.dropdownValue} getprioritytask={this.props.getprioritytask}
+                        handlesubmitnoncompleted={this.handleSubmitnoncompleteddropdown}
+                        dropdownValue={this.state.dropdownValue} 
                         />
                     </div>
                     <div className="col-10">
@@ -166,4 +194,4 @@ class Task extends Component{
 }
     
  
-export default Task;
+export default connect(mapStateToProps,mapDispatchToProps)(Task);

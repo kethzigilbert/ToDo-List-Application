@@ -4,7 +4,7 @@
       "id": 1,
       "priority": "High",
       "taskdescription": "Sends anyone to heaven, I wish I could get my mother-in-law to eat it!",
-      "completed": true,
+      "completed": false,
       "author": "Paul McVites",
       "date": "2014-09-05T17:57:28.556094Z",
       "project": "Food"
