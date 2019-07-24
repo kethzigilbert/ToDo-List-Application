@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import { stat } from 'fs';
 
 export const Tasks = ( state = { isLoading: true,
     errMess: null,
