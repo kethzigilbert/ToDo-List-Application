@@ -43,7 +43,7 @@ class AddTaskForm extends Component{
    
     handleSubmit(values) {
         this.toggleModal();
-        alert('Current State is: ' + JSON.stringify(values));
+        console.log('Current State is: ' + JSON.stringify(values));
         this.props.postTask(values.priority, values.name, values.taskdescription,values.category);
        
     }
