@@ -6,11 +6,11 @@ import { ListGroup,ListGroupItem, Button,Label,Col,Form, FormGroup, ButtonGroup,
 import {Loading} from './LoadingComponent';
 import AddTaskForm from './AddTaskFormComponent';
 //import { baseUrl } from '../shared/baseUrl';
-import NotCompletedTasks from './NotCompletedTasks';
+import DisplayTasks from './DisplayTasks';
 import DisplayCheckbox from './DisplayCheckbox';
 import DropdownComponent from './DropdownComponent';
 import {connect} from 'react-redux';
-import {fetchTasks, postTask, postupdatetask, deletetask,getprioritytask } from '../redux/ActionCreators';
+import {fetchTasks, postTask, postupdatetask, deletetask,getfilteredtask } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return{
@@ -21,10 +21,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   
-  postTask: ( priority, author, task) => dispatch(postTask( priority, author, task)),
+  //postTask: ( priority, author, task) => dispatch(postTask( priority, author, task)),
   fetchTasks: () => dispatch(fetchTasks()),
   postupdatetask: (id,data) => dispatch(postupdatetask(id,data)),
-  getprioritytask: (data) => dispatch(getprioritytask(data)),
+  getfilteredtask: (data) => dispatch(getfilteredtask(data)),
   deletetask: (id) => dispatch(deletetask(id))
   
   
@@ -34,47 +34,65 @@ class Task extends Component{
         constructor(props){
             super(props);
             this.handleSubmit = this.handleSubmit.bind(this);
-            this.handleSubmitcompleteddropdown=this.handleSubmitcompleteddropdown.bind(this);
+            //this.handleSubmitcompleteddropdown=this.handleSubmitcompleteddropdown.bind(this);
             this.handleclearbutton=this.handleclearbutton.bind(this);
-            this.handleSubmitnoncompleteddropdown=this.handleSubmitnoncompleteddropdown.bind(this);
-            //this.alterstate=this.alterstate.bind(this);
+            //this.handleSubmitnoncompleteddropdown=this.handleSubmitnoncompleteddropdown.bind(this);
+            this.handleSubmitcommoncompleteddropdown=this.handleSubmitcommoncompleteddropdown.bind(this);
+            this.handleAllTasksButton=this.handleAllTasksButton.bind(this);
             this.state = {
                 dropdownValue:"Select Action"
                
             };
            
         }
-        handleSubmitcompleteddropdown() {
+        // handleSubmitcompleteddropdown() {
        
-        var combinedarray = { "completed": [true] }
-        this.props.getprioritytask(combinedarray)
+        // var combinedarray = { "completed": [true] }
+        // this.props.getfilteredtask(combinedarray)
         
-        this.setState({dropdownValue : 'Completed'});
-        }
+        // this.setState({dropdownValue : 'Completed'});
+        // }
         
         
 
-        handleSubmitnoncompleteddropdown() {
+        // handleSubmitnoncompleteddropdown() {
     
-            var combinedarray = { "completed": [false] }
-            this.setState({dropdownValue : 'Pending'});
+        //     var combinedarray = { "completed": [false] }
+        //     this.setState({dropdownValue : 'Pending'});
             
-            this.props.getprioritytask(combinedarray)
+        //     this.props.getfilteredtask(combinedarray)
+
+        // }
+        handleSubmitcommoncompleteddropdown(value) {
+            if(value==="Pending"){
+                var combinedarray = { "completed": [false] }
+                this.setState({dropdownValue : 'Pending'});
+            }
+            else if(value==="Completed")
+            {
+                var combinedarray = { "completed": [true] }
+                this.setState({dropdownValue : 'Completed'});
+            }
+            
+            
+            this.props.getfilteredtask(combinedarray)
 
         }
-        
+        handleAllTasksButton(){
+            this.setState({dropdownValue : 'All Tasks'});
+            this.props.fetchTasks();
+            //alert("Hi");
+            
+        }
         handleclearbutton(){
               this.props.fetchTasks();
               //alert("Hi");
               
           }
+
         handleSubmit = (e) => {
             e.preventDefault();
-            //alert(this.refs.value);
-            //  extract the node list from the form
-            //  it looks like an array, but lacks array methods
-             //const { priority } = this.form;
-             //alert(this.form.getElementsByTagName('project'));
+            
              var combinedarray = {};
              var lookup=[];
              for ( var i=0; i< this.form.length; i++)
@@ -92,24 +110,35 @@ class Task extends Component{
                   
              }
              
-             alert(combinedarray.priority);
-             alert(combinedarray.project);
+             //alert(combinedarray.priority);
+             //alert(combinedarray.project);
              
-             this.props.getprioritytask(combinedarray);
+             this.props.getfilteredtask(combinedarray);
           }
         
           
           componentDidMount(){
-    
-            this.props.fetchTasks();
+            
+                this.props.fetchTasks();
+            
+            
+            
             
           }
           
         
         render () {
-        
-        
-        const completedtasks = this.props.tasks.tasks.filter(task=> !task.completed);
+                var completedtasks;
+                if(this.state.dropdownValue==="Pending"){
+                  completedtasks = this.props.tasks.tasks.filter(task=> !task.completed);
+                 }
+                 else if (this.state.dropdownValue==="Completed"){
+                 completedtasks = this.props.tasks.tasks.filter(task=> task.completed);
+                }
+                else {
+                 completedtasks = this.props.tasks.tasks;
+                }
+
         
         
         
@@ -137,17 +166,20 @@ class Task extends Component{
         return(
             <div className="container">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-2 col-sm-2 col-md-3">
                         <DropdownComponent 
-                        handlesubmitcompleted={this.handleSubmitcompleteddropdown}
-                        handlesubmitnoncompleted={this.handleSubmitnoncompleteddropdown}
+                        //handlesubmitcompleted={this.handleSubmitcompleteddropdown}
+                        //handlesubmitnoncompleted={this.handleSubmitnoncompleteddropdown}
+                        handleSubmitcommoncompleteddropdown={this.handleSubmitcommoncompleteddropdown}
+                        handleAllTasksButton={this.handleAllTasksButton}
                         dropdownValue={this.state.dropdownValue} 
                         />
                     </div>
-                    <div className="col-10">
+                    <div className="col-10 col-sm-10 col-md-9">
                         <h3>Tasks 
                         
-                        <AddTaskForm postTask={this.props.postTask} />
+                        <AddTaskForm //postTask={this.props.postTask}
+                         />
                         </h3>
                         
                         
@@ -156,7 +188,7 @@ class Task extends Component{
                     </div>
                 </div>
                 <div className="row" >
-                    <div className="col-2">
+                    <div className="col-2 col-sm-2 col-md-3">
                         <div>
                         <h5 className="heading_inline"> Filters</h5>
                         <Button color='link' className="clear_float" onClick={this.handleclearbutton}>Clear</Button>
@@ -171,19 +203,19 @@ class Task extends Component{
                            
                             <DisplayCheckbox tasks={this.props.tasks.tasks} checkboxname="priority"/>
                             
-                        <h6> Project </h6>
+                        <h6> Category </h6>
                         
                            {/* {projectcheckboxes} */}
-                           <DisplayCheckbox tasks={this.props.tasks.tasks} checkboxname="project"/>
+                           <DisplayCheckbox tasks={this.props.tasks.tasks} checkboxname="category"/>
                             <input type="submit" value="Apply" />
                             
                             
                         </form>
 
                     </div>
-                    <div className="col-10">
+                    <div className="col-10 col-sm-10 col-md-9">
                         
-                            <NotCompletedTasks tasks={this.props.tasks} postupdatetask={this.props.postupdatetask} deletetask={this.props.deletetask} getprioritytask={this.props.getprioritytask}/>
+                            <DisplayTasks tasks={completedtasks} postupdatetask={this.props.postupdatetask} deletetask={this.props.deletetask} getfilteredtask={this.props.getfilteredtask}/>
                         
                     </div>
                 </div>

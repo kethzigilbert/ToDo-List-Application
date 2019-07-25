@@ -21,12 +21,12 @@ class RenderCompleted extends Component
         {
             return (
                 
-                <Button outline 
+     <Button outline 
       onClick={this.toggleCheckBox}
-       className="float-right" type="submit" >
-       <span className="fa fa-check fa-sm"></span>
+       className="float-right btn " type="submit" >
+       <span className="fa fa-check fa-sm ">Completed</span>
             
-        Completed
+        
                                      
         </Button>
         );
@@ -38,9 +38,9 @@ class RenderCompleted extends Component
             return(
                 <Button outline 
        onClick={this.toggleCheckBox}
-       className="float-right" type="submit" >
-       <span className="fa fa-list fa-sm"></span>
-            To Be Done
+       className="float-right font-completed" type="submit" >
+       <span className="fa fa-list fa-sm ">To Be Done</span>
+            
                                      
         </Button>
             );

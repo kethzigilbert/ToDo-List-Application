@@ -39,7 +39,7 @@ class DisplayCheckbox extends Component
     })
 
         return(
-            <div>
+            <div className="checkbox-size">
             {projectcheckboxes}
             </div>
         );

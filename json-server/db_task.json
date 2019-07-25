@@ -7,16 +7,16 @@
       "completed": false,
       "author": "Paul McVites",
       "date": "2014-09-05T17:57:28.556094Z",
-      "project": "Food"
+      "category": "Food"
     },
     {
       "id": 3,
       "priority": "High",
       "taskdescription": "Ultimate, Reaching for the stars!",
-      "completed": false,
+      "completed": true,
       "author": "Ringo Starry",
       "date": "2013-12-02T17:57:28.556094Z",
-      "project": "Food"
+      "category": "Food"
     },
     {
       "author": "KEthzi",
@@ -25,7 +25,7 @@
       "completed": true,
       "date": "2019-04-08T06:10:29.286Z",
       "id": 6,
-      "project": "Misc"
+      "category": "Misc"
     },
     {
       "priority": "High",
@@ -34,7 +34,7 @@
       "date": "2019-04-08T08:03:14.807Z",
       "id": 8,
       "completed": false,
-      "project": "test"
+      "category": "test"
     },
     {
       "priority": "Medium",
@@ -43,16 +43,16 @@
       "date": "2019-04-10T06:57:42.013Z",
       "completed": false,
       "id": 9,
-      "project": "Shifting"
+      "category": "Shifting"
     },
     {
       "priority": "Medium",
       "author": "Tanay",
       "taskdescription": "Have to book tickets to hyderabad",
       "date": "2019-04-10T06:59:02.133Z",
-      "completed": true,
+      "completed": false,
       "id": 10,
-      "project": "Flight"
+      "category": "Flight"
     },
     {
       "priority": "High",
@@ -61,16 +61,16 @@
       "date": "2019-04-10T15:24:07.898Z",
       "completed": true,
       "id": 11,
-      "project": "Misc"
+      "category": "Misc"
     },
     {
       "priority": "High",
       "author": "KEthzi",
       "taskdescription": "call bear",
       "date": "2019-04-20T10:44:38.632Z",
-      "completed": true,
+      "completed": false,
       "id": 12,
-      "project": "Misc"
+      "category": "Misc"
     },
     {
       "priority": "Low",
@@ -79,7 +79,7 @@
       "date": "2019-04-27T09:05:31.435Z",
       "completed": false,
       "id": 13,
-      "project": "Misc"
+      "category": "Misc"
     },
     {
       "priority": "Medium",
@@ -88,7 +88,34 @@
       "date": "2019-05-01T02:50:27.985Z",
       "completed": true,
       "id": 14,
-      "project": "ML"
+      "category": "ML"
+    },
+    {
+      "priority": "Low",
+      "author": "Kethzi",
+      "taskdescription": "another test task",
+      "category": "random",
+      "date": "2019-07-24T13:41:14.246Z",
+      "completed": false,
+      "id": 18
+    },
+    {
+      "priority": "High",
+      "author": "tggahlot",
+      "taskdescription": "Idempotency of the invalidate file API",
+      "category": "VISA",
+      "date": "2019-07-24T16:52:18.631Z",
+      "completed": true,
+      "id": 19
+    },
+    {
+      "priority": "High",
+      "author": "tggahlot",
+      "taskdescription": "End to end locking in the SendEU Workflow",
+      "category": "VISA",
+      "date": "2019-07-24T16:53:06.472Z",
+      "completed": false,
+      "id": 20
     }
   ]
 }

@@ -5,17 +5,17 @@ import RenderDelete from './RenderDelete';
 import {ListGroupItem,ListGroup} from 'reactstrap';
 
 
-const NotCompletedTasks = (props) =>{
-    const notcompleted= props.tasks.tasks.map((task) => {
+const DisplayTasks = (props) =>{
+    const notcompleted= props.tasks.map((task) => {
     return (
-    <ListGroupItem key={task.id}  >{task.taskdescription}
+    <ListGroupItem key={task.id} className = "list-font"  >{task.taskdescription}
    <RenderPriority priority={task.priority}/>
    <RenderCompleted completed={task.completed} taskid={task.id} 
     postupdatetask={props.postupdatetask}
    />
    {/* <RenderDelete taskid={task.id} deletetask={this.props.deletetask}/> */}
    <p>Author: {task.author} <br/>
-   Project: {task.project}</p>
+   Category: {task.project}</p>
   </ListGroupItem>
 
             );
@@ -27,7 +27,7 @@ const NotCompletedTasks = (props) =>{
         </ListGroup>
     ); 
     }
-export default NotCompletedTasks;
+export default DisplayTasks;
 
 
 

@@ -85,12 +85,13 @@ export const addTask = (task) => ({
     payload: task
     
     });
-export const postTask =(priority, author, taskdescription) => (dispatch) => {
+export const postTask =(priority, author, taskdescription,category) => (dispatch) => {
     const newTask=  {
         
         priority: priority,
         author: author,
-        taskdescription: taskdescription
+        taskdescription: taskdescription,
+        category:category
         
     
     };
@@ -169,7 +170,7 @@ export const tasksFailed = (errmess) => ({
  });
 
  ///Fetch based on priority
- export const getprioritytask=(data) => (dispatch) => {
+ export const getfilteredtask=(data) => (dispatch) => {
      var urlform= '?';
 
      for (let [key,value] of Object.entries(data)) {

@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import PropTypes  from 'prop-types';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 
+
 class DropdownComponent extends Component {
 constructor(props){
     super(props);
@@ -10,17 +11,20 @@ constructor(props){
     //this.handleSubmitnoncompleteddropdown=this.handleSubmitnoncompleteddropdown.bind(this);
     this.state={
         dropdownOpen: false,
-        
+        //dropdownValue:"Select Action"
+           
+        }; 
 
-    };
+    }
 
-}
+   
+
 toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
-  
+
     
 render(){
     return(
@@ -32,9 +36,10 @@ render(){
                             {this.props.dropdownValue}
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem  onClick={this.props.handlesubmitcompleted}>Completed</DropdownItem>
+                                <DropdownItem  onClick={()=>this.props.handleSubmitcommoncompleteddropdown("Completed")}>Completed</DropdownItem>
                                 
-                                <DropdownItem onClick={this.props.handlesubmitnoncompleted}> All Pending Tasks</DropdownItem>
+                                <DropdownItem onClick={()=>this.props.handleSubmitcommoncompleteddropdown("Pending")}> All Pending Tasks</DropdownItem>
+                                <DropdownItem onClick={this.props.handleAllTasksButton}> All Tasks</DropdownItem>
                                 
                             </DropdownMenu>
         </Dropdown> 
@@ -46,10 +51,11 @@ render(){
 
 DropdownComponent.propTypes= {
         dropdownValue: PropTypes.string,
-        handlesubmitcompleted: PropTypes.func,
-        handlesubmitnoncompleted: PropTypes.func
-
+        //handlesubmitcompleted: PropTypes.func,
+        //handlesubmitnoncompleted: PropTypes.func,
+        handleAllTasksButton: PropTypes.func,
+        handleSubmitcommoncompleteddropdown: PropTypes.func
     };
 
 
-export default DropdownComponent;
+export default (DropdownComponent);

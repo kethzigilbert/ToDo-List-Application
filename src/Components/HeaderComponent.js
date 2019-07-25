@@ -1,30 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {  Jumbotron } from 'reactstrap';
 //import {NavLink} from 'react-router-dom';
-class Header extends Component{
-
-    constructor(props){
-        super(props);
-
-        this.state={
-            isNavOpen:false,
-            
-
-        }
-        this.toggleNav=this.toggleNav.bind(this);
-        
-   
-    }
-    toggleNav()
+ 
+const Header = ()=>
     {
-        this.setState({
-            isNavOpen: !this.state.isNavOpen
-        });
-    }
-
-   
-
-    render(){
         return(
             <React.Fragment>
                 
@@ -44,6 +23,5 @@ class Header extends Component{
         );
 
     }
-}
 
 export default Header;
